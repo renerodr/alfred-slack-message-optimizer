@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>bundleid</key>
+    <string>com.rene.slack-message-optimizer</string>
+    <key>category</key>
+    <string>Productivity</string>
+    <key>createdby</key>
+    <string>Rene Rodriguez</string>
+    <key>description</key>
+    <string>Fix grammar, spelling, and Slack formatting with OpenAI. Type your keyword followed by your message, press Enter — optimized text is copied to your clipboard.</string>
+    <key>name</key>
+    <string>Slack Message Optimizer</string>
+    <key>readme</key>
+    <string>Trigger with your configured keyword followed by your message. Press Enter to optimize — the result is copied to your clipboard, press ⌘V to paste. Press Cmd+Enter to preview in Large Type. Prefix with a tone: formal, casual, friendly, or concise.</string>
+    <key>version</key>
+    <string>1.0.0</string>
+    <key>webaddress</key>
+    <string>https://github.com/renerodr/alfred-slack-message-optimizer</string>
+    <key>variables</key>
+    <dict>
+        <key>OPENAI_API_KEY</key>
+        <string></string>
+        <key>JIRA_BASE_URL</key>
+        <string></string>
+        <key>JIRA_TICKET_PREFIX</key>
+        <string></string>
+        <key>KEYWORD</key>
+        <string>smo</string>
+        <key>EMOJI_USAGE</key>
+        <string>minimal</string>
+    </dict>
+    <key>variablesdontexport</key>
+    <array>
+        <string>OPENAI_API_KEY</string>
+    </array>
+    <key>userconfigurationconfig</key>
+    <array>
+        <dict>
+            <key>config</key>
+            <dict>
+                <key>default</key>
+                <string></string>
+                <key>placeholder</key>
+                <string>sk-...</string>
+                <key>required</key>
+                <true/>
+                <key>trim</key>
+                <true/>
+            </dict>
+            <key>description</key>
+            <string>Your API key from platform.openai.com</string>
+            <key>label</key>
+            <string>OpenAI API Key</string>
+            <key>type</key>
+            <string>textfield</string>
+            <key>variable</key>
+            <string>OPENAI_API_KEY</string>
+        </dict>
+        <dict>
+            <key>config</key>
+            <dict>
+                <key>default</key>
+                <string></string>
+                <key>placeholder</key>
+                <string>https://yourcompany.atlassian.net/browse</string>
+                <key>required</key>
+                <false/>
+                <key>trim</key>
+                <true/>
+            </dict>
+            <key>description</key>
+            <string>Base URL for Jira tickets, e.g. https://yourcompany.atlassian.net/browse</string>
+            <key>label</key>
+            <string>Jira Base URL</string>
+            <key>type</key>
+            <string>textfield</string>
+            <key>variable</key>
+            <string>JIRA_BASE_URL</string>
+        </dict>
+        <dict>
+            <key>config</key>
+            <dict>
+                <key>default</key>
+                <string></string>
+                <key>placeholder</key>
+                <string>BAT</string>
+                <key>required</key>
+                <false/>
+                <key>trim</key>
+                <true/>
+            </dict>
+            <key>description</key>
+            <string>Ticket prefixes to detect and linkify. Comma-separate multiple values, e.g. BAT, MEDIA, OPS</string>
+            <key>label</key>
+            <string>Jira Ticket Prefix(es)</string>
+            <key>type</key>
+            <string>textfield</string>
+            <key>variable</key>
+            <string>JIRA_TICKET_PREFIX</string>
+        </dict>
+        <dict>
+            <key>config</key>
+            <dict>
+                <key>default</key>
+                <string>smo</string>
+                <key>placeholder</key>
+                <string>smo</string>
+                <key>required</key>
+                <true/>
+                <key>trim</key>
+                <true/>
+            </dict>
+            <key>description</key>
+            <string>Alfred keyword to trigger the optimizer</string>
+            <key>label</key>
+            <string>Trigger Keyword</string>
+            <key>type</key>
+            <string>textfield</string>
+            <key>variable</key>
+            <string>KEYWORD</string>
+        </dict>
+        <dict>
+            <key>config</key>
+            <dict>
+                <key>default</key>
+                <string>minimal</string>
+                <key>options</key>
+                <array>
+                    <string>none</string>
+                    <string>minimal</string>
+                    <string>moderate</string>
+                    <string>generous</string>
+                </array>
+            </dict>
+            <key>description</key>
+            <string>How often the model adds emoji to the output</string>
+            <key>label</key>
+            <string>Emoji Usage</string>
+            <key>type</key>
+            <string>select</string>
+            <key>variable</key>
+            <string>EMOJI_USAGE</string>
+        </dict>
+    </array>
+    <key>objects</key>
+    <array>
+        <dict>
+            <key>uid</key>
+            <string>scriptfilter-slack-optimizer</string>
+            <key>type</key>
+            <string>alfred.workflow.input.scriptfilter</string>
+            <key>config</key>
+            <dict>
+                <key>keyword</key>
+                <string>{var:KEYWORD}</string>
+                <key>withspace</key>
+                <true/>
+                <key>script</key>
+                <string>./script_filter.py {query}</string>
+                <key>title</key>
+                <string>Slack Message Optimizer</string>
+                <key>subtext</key>
+                <string>Optimize message for Slack (grammar, spelling, formatting)</string>
+                <key>runningsubtext</key>
+                <string>Optimizing your message…</string>
+                <key>argtype</key>
+                <integer>2</integer>
+                <key>alfredfiltersresults</key>
+                <false/>
+                <key>alfredfiltersresultsmode</key>
+                <integer>0</integer>
+                <key>escaping</key>
+                <integer>1023</integer>
+                <key>type</key>
+                <integer>0</integer>
+                <key>argumenttrimmode</key>
+                <integer>0</integer>
+                <key>queueingmode</key>
+                <integer>0</integer>
+            </dict>
+        </dict>
+        <dict>
+            <key>uid</key>
+            <string>runscript-optimize</string>
+            <key>type</key>
+            <string>alfred.workflow.action.script</string>
+            <key>config</key>
+            <dict>
+                <key>script</key>
+                <string>./action.py {query}</string>
+                <key>type</key>
+                <integer>0</integer>
+                <key>escaping</key>
+                <integer>1023</integer>
+            </dict>
+        </dict>
+        <dict>
+            <key>uid</key>
+            <string>runscript-preview</string>
+            <key>type</key>
+            <string>alfred.workflow.action.script</string>
+            <key>config</key>
+            <dict>
+                <key>script</key>
+                <string>./action.py {query}</string>
+                <key>type</key>
+                <integer>0</integer>
+                <key>escaping</key>
+                <integer>1023</integer>
+            </dict>
+        </dict>
+        <dict>
+            <key>uid</key>
+            <string>dialog-preview</string>
+            <key>type</key>
+            <string>alfred.workflow.action.script</string>
+            <key>config</key>
+            <dict>
+                <key>script</key>
+                <string>./preview.py</string>
+                <key>type</key>
+                <integer>0</integer>
+                <key>escaping</key>
+                <integer>0</integer>
+            </dict>
+        </dict>
+    </array>
+    <key>connections</key>
+    <dict>
+        <key>scriptfilter-slack-optimizer</key>
+        <array>
+            <dict>
+                <key>destinationuid</key>
+                <string>runscript-optimize</string>
+                <key>modifiers</key>
+                <integer>0</integer>
+                <key>modifiersubtext</key>
+                <string></string>
+                <key>vitoclose</key>
+                <true/>
+            </dict>
+            <dict>
+                <key>destinationuid</key>
+                <string>runscript-preview</string>
+                <key>modifiers</key>
+                <integer>1048576</integer>
+                <key>modifiersubtext</key>
+                <string>Preview optimized message</string>
+                <key>vitoclose</key>
+                <false/>
+            </dict>
+        </array>
+        <key>runscript-preview</key>
+        <array>
+            <dict>
+                <key>destinationuid</key>
+                <string>dialog-preview</string>
+                <key>modifiers</key>
+                <integer>0</integer>
+                <key>modifiersubtext</key>
+                <string></string>
+                <key>vitoclose</key>
+                <false/>
+            </dict>
+        </array>
+    </dict>
+</dict>
+</plist>
